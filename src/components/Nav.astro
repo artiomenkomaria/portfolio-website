@@ -1,0 +1,135 @@
+---
+import LocalTime from "~/components/islands/LocalTime";
+import { navigationData } from "~/data/navigation";
+
+const { logo, status, links, cta } = navigationData;
+---
+
+<div class="container header-wrapper">
+  <header class="navbar">
+    <a href={logo.href} class="logo">
+      {logo.name} <span>{logo.arrow}</span>
+    </a>
+
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      <span>{status.availability}</span>
+      <span>{status.separator}</span>
+      <LocalTime
+        cityPrefix={status.cityPrefix}
+        fallbackTime={status.fallbackTime}
+        timeZone={status.timeZone}
+        locale={status.locale}
+        client:idle
+      />
+    </div>
+
+    <nav class="nav-links">
+      {links.map((link) => <a href={link.href}>{link.label}</a>)}
+      <a href={cta.href} class="btn btn-primary nav-cta">{cta.label}</a>
+    </nav>
+  </header>
+</div>
+
+<style>
+  .header-wrapper {
+    position: sticky;
+    top: 16px;
+    z-index: 100;
+    margin-bottom: 24px;
+  }
+
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-canvas-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-pill);
+    padding: 10px 12px 10px 24px;
+  }
+
+  .logo {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-size: var(--text-base);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    padding: 6px 16px;
+    border-radius: var(--radius-pill);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--status-green);
+    border-radius: 50%;
+    position: relative;
+  }
+
+  .status-dot::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background-color: var(--status-green);
+    opacity: 0.4;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.8);
+      opacity: 0.6;
+    }
+    70% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  .nav-links a:not(.btn):hover {
+    color: var(--accent-terracotta);
+  }
+
+  .nav-cta {
+    padding: 10px 20px;
+    font-size: 0.875rem;
+  }
+
+  @media (max-width: 1024px) {
+    .status-pill {
+      display: none;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .nav-links a:not(.nav-cta) {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,285 @@
+---
+import HeroHoverHeading, {
+  type HeadingSegment,
+} from "~/components/islands/HeroHoverHeading";
+import ShowreelWidget, {
+  type ShowreelProps,
+} from "~/components/islands/ShowreelWidget";
+
+interface Props {
+  headingSegments: HeadingSegment[];
+  body: string;
+  primaryCta: string;
+  primaryHref: string;
+  secondaryCta: string;
+  secondaryHref: string;
+  showreel: ShowreelProps;
+}
+
+const {
+  headingSegments,
+  body,
+  primaryCta,
+  primaryHref,
+  secondaryCta,
+  secondaryHref,
+  showreel,
+} = Astro.props;
+---
+
+<section class="bento-grid hero-section">
+  <div class="bento-card hero-left">
+    <div>
+      <h1 class="hero-h1">
+        <HeroHoverHeading segments={headingSegments} client:load />
+      </h1>
+      <p class="hero-sub">{body}</p>
+    </div>
+    <div class="hero-actions">
+      <a href={primaryHref} class="btn btn-primary">{primaryCta}</a>
+      <a href={secondaryHref} class="btn btn-outline">{secondaryCta}</a>
+    </div>
+  </div>
+
+  <ShowreelWidget {...showreel} client:load />
+</section>
+
+<style>
+  .hero-left {
+    grid-column: span 7;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 580px;
+  }
+
+  .hero-h1 {
+    font-size: var(--text-hero);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+
+  .hero-section :global(.hover-word) {
+    position: relative;
+    display: inline-block;
+    color: var(--accent-terracotta);
+    border-bottom: 1px dashed var(--accent-terracotta);
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .hero-section :global(.hover-word:hover) {
+    color: var(--bg-dark);
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 32px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-section :global(.floating-preview) {
+    position: fixed;
+    width: 220px;
+    height: 220px;
+    border-radius: var(--radius-md);
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0;
+    transform: scale(0.8) translate(-50%, -50%);
+    transition:
+      opacity 0.25s var(--transition-smooth),
+      transform 0.25s var(--transition-smooth);
+    box-shadow: var(--shadow-preview);
+    overflow: hidden;
+    border: 3px solid var(--bg-canvas);
+    background: var(--bg-dark);
+  }
+
+  .hero-section :global(.floating-preview.active) {
+    opacity: 1;
+    transform: scale(1) translate(15px, -110%);
+  }
+
+  .hero-section :global(.floating-preview img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-section :global(.hero-right) {
+    grid-column: span 5;
+    padding: 0;
+    background-color: var(--bg-dark);
+    color: var(--bg-canvas);
+    cursor: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 580px;
+  }
+
+  .hero-section :global(.showreel-bg) {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(
+        circle at 20% 20%,
+        var(--accent-terracotta-glow),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at 80% 80%,
+        var(--status-green-glow),
+        transparent 55%
+      ),
+      var(--showreel-bg-image) center / cover;
+    opacity: 0.85;
+    transition: transform 0.7s var(--transition-smooth);
+  }
+
+  .hero-section :global(.hero-right:hover .showreel-bg) {
+    transform: scale(1.05);
+  }
+
+  .hero-section :global(.showreel-top),
+  .hero-section :global(.showreel-bottom) {
+    position: relative;
+    z-index: 2;
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .hero-section :global(.showreel-title) {
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  .hero-section :global(.showreel-subtitle) {
+    font-size: var(--text-sm);
+    color: var(--text-light-muted);
+  }
+
+  .hero-section :global(.reel-tag) {
+    background: var(--bg-dark-glass);
+    backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    border: 1px solid var(--border-white-subtle);
+  }
+
+  .hero-section :global(.cursor-badge) {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    background: var(--accent-terracotta);
+    color: var(--bg-canvas);
+    padding: 12px 20px;
+    border-radius: var(--radius-pill);
+    font-size: 0.875rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    transition:
+      opacity 0.2s,
+      transform 0.2s;
+    white-space: nowrap;
+    box-shadow: var(--shadow-cursor);
+  }
+
+  .hero-section :global(.cursor-badge.visible) {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .hero-section :global(.modal-overlay) {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-dark-overlay);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .hero-section :global(.modal-overlay.open) {
+    display: flex;
+  }
+
+  .hero-section :global(.modal-box) {
+    max-width: 960px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: var(--bg-black);
+    border-radius: var(--radius-lg);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-canvas);
+    border: 1px solid var(--border-white-subtle);
+  }
+
+  .hero-section :global(.modal-close) {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    border: none;
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  .hero-section :global(.modal-content) {
+    text-align: center;
+    padding: 24px;
+  }
+
+  .hero-section :global(.modal-heading) {
+    font-size: var(--text-section);
+    margin-bottom: 8px;
+  }
+
+  .hero-section :global(.modal-desc) {
+    color: var(--text-muted-on-dark);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-left,
+    .hero-section :global(.hero-right) {
+      grid-column: span 12;
+      min-height: auto;
+    }
+    .hero-section :global(.hero-right) {
+      min-height: 380px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-section :global(.floating-preview),
+    .hero-section :global(.cursor-badge) {
+      display: none !important;
+    }
+    .hero-section :global(.hero-right) {
+      cursor: pointer;
+    }
+  }
+</style>

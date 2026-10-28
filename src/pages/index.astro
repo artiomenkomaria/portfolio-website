@@ -1,0 +1,33 @@
+---
+import { getEntry } from "astro:content";
+import Layout from "~/layouts/Layout.astro";
+
+import Hero from "~/components/sections/Hero.astro";
+import SelectedWorks from "~/components/sections/SelectedWorks.astro";
+import Playground from "~/components/sections/Playground.astro";
+import About from "~/components/sections/About.astro";
+import SocialProof from "~/components/sections/SocialProof.astro";
+
+const page = await getEntry("pages", "index");
+if (!page) throw new Error("Missing content: src/content/pages/index.md");
+
+const { seo, sections } = page.data;
+
+const components: Record<string, any> = {
+  Hero,
+  SelectedWorks,
+  Playground,
+  About,
+  SocialProof,
+};
+---
+
+<Layout seo={seo}>
+  {
+    sections?.map((section: any) => {
+      const Component = components[section.component];
+      if (!Component) return null;
+      return <Component {...section} />;
+    })
+  }
+</Layout>

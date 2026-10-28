@@ -1,0 +1,166 @@
+---
+import EmailCopyButton from "~/components/islands/EmailCopyButton";
+import { footerData } from "~/data/navigation";
+
+const {
+  sectionId,
+  headingPrefix,
+  headingAccent,
+  headingSuffix,
+  subheading,
+  emailButton,
+  telegramCta,
+  socials,
+  copyright,
+} = footerData;
+---
+
+<div class="footer-wrapper" id={sectionId}>
+  <footer class="mega-footer">
+    <div>
+      <h2 class="footer-heading">
+        {headingPrefix}<span class="serif-italic">{headingAccent}</span>{headingSuffix}
+      </h2>
+      <p class="footer-sub">{subheading}</p>
+    </div>
+
+    <div>
+      <EmailCopyButton {...emailButton} client:visible />
+    </div>
+
+    <div class="footer-bottom">
+      <div class="social-links">
+        <a
+          href={telegramCta.href}
+          target="_blank"
+          rel="noopener"
+          class="btn-tg"
+        >
+          {telegramCta.label}
+        </a>
+        {socials.map((item) => <a href={item.href}>{item.label}</a>)}
+      </div>
+      <div class="copyright">{copyright}</div>
+    </div>
+  </footer>
+</div>
+
+<style>
+  .footer-wrapper {
+    padding: 64px 20px 20px;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+  }
+
+  .mega-footer {
+    background-color: var(--bg-dark);
+    color: var(--bg-canvas);
+    border-radius: var(--radius-xl);
+    padding: 64px 48px 40px;
+    min-height: 68vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+  }
+
+  .footer-heading {
+    font-size: var(--text-footer-heading);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    max-width: 780px;
+    margin-bottom: 16px;
+  }
+
+  .footer-sub {
+    color: var(--text-muted-on-dark);
+    max-width: 520px;
+    font-size: var(--text-md);
+  }
+
+  .mega-footer :global(.email-copy-btn) {
+    width: 100%;
+    background: var(--bg-canvas-subtle);
+    border: 1px solid var(--border-on-dark-strong);
+    border-radius: var(--radius-lg);
+    padding: 36px 24px;
+    color: var(--bg-canvas);
+    font-family: var(--font-sans);
+    font-size: var(--text-email-cta);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s var(--transition-smooth);
+    text-align: left;
+  }
+
+  .mega-footer :global(.email-copy-btn:hover) {
+    background: var(--accent-terracotta);
+    border-color: var(--accent-terracotta);
+    transform: translateY(-3px);
+  }
+
+  .mega-footer :global(.copy-badge) {
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 10px 18px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-dark-pill);
+    white-space: nowrap;
+  }
+
+  .mega-footer :global(.email-copy-btn.copied) {
+    background: var(--status-green);
+    border-color: var(--status-green);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-on-dark);
+    font-size: 0.9rem;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .social-links a:hover {
+    color: var(--accent-terracotta);
+  }
+
+  .btn-tg {
+    background: var(--accent-terracotta);
+    color: var(--bg-canvas) !important;
+    padding: 8px 18px;
+    border-radius: var(--radius-pill);
+    font-weight: 500;
+  }
+
+  .copyright {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  @media (max-width: 767px) {
+    .mega-footer {
+      padding: 36px 24px;
+    }
+    .mega-footer :global(.email-copy-btn) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+</style>

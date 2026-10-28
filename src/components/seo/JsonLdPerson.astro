@@ -1,0 +1,18 @@
+---
+import { siteMeta } from "~/data/navigation";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: siteMeta.person.name,
+  jobTitle: siteMeta.person.jobTitle,
+  url: siteMeta.person.url,
+  email: siteMeta.person.email,
+  homeLocation: {
+    "@type": "Place",
+    name: siteMeta.person.location,
+  },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

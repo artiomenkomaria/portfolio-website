@@ -1,0 +1,173 @@
+---
+interface Project {
+  title: string;
+  year: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  badge: string;
+  tags: string[];
+}
+
+interface Props {
+  sectionId: string;
+  heading: string;
+  indexLabel: string;
+  projects: Project[];
+  archiveLabel: string;
+  archiveHref: string;
+}
+
+const { sectionId, heading, indexLabel, projects, archiveLabel, archiveHref } =
+  Astro.props;
+---
+
+<div class="section-header" id={sectionId}>
+  <h2 class="section-title">{heading}</h2>
+  <span class="section-index">{indexLabel}</span>
+</div>
+
+<section class="bento-grid">
+  {
+    projects.map((project) => (
+      <article class="bento-card project-card">
+        <div class="project-media">
+          <img src={project.image} alt={project.imageAlt} loading="lazy" />
+          <span class="project-video-badge">{project.badge}</span>
+        </div>
+        <div class="project-info">
+          <div class="project-header">
+            <h3 class="project-title">{project.title}</h3>
+            <span class="project-year">{project.year}</span>
+          </div>
+          <p class="project-desc">{project.description}</p>
+          <div class="tags-list">
+            {project.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+        </div>
+      </article>
+    ))
+  }
+
+  <div class="archive-btn-wrapper">
+    <a href={archiveHref} class="btn-archive">{archiveLabel}</a>
+  </div>
+</section>
+
+<style>
+  .project-card {
+    grid-column: span 6;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    cursor: pointer;
+    transition: transform 0.3s var(--transition-smooth);
+  }
+
+  .project-media {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    background-color: var(--bg-dark);
+  }
+
+  .project-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      transform 0.6s var(--transition-smooth),
+      filter 0.6s;
+  }
+
+  .project-video-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--bg-dark-badge);
+    backdrop-filter: blur(6px);
+    color: var(--bg-canvas);
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: all 0.3s var(--transition-smooth);
+  }
+
+  .project-card:hover .project-media img {
+    transform: scale(1.04);
+  }
+
+  .project-card:hover .project-video-badge {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .project-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 8px 8px;
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .project-title {
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .project-year {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+  }
+
+  .project-desc {
+    color: var(--text-muted);
+    font-size: 0.98rem;
+  }
+
+  .archive-btn-wrapper {
+    grid-column: span 12;
+    margin-top: 4px;
+  }
+
+  .btn-archive {
+    width: 100%;
+    height: 64px;
+    background-color: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    font-size: var(--text-md);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s var(--transition-smooth);
+    border: 1px solid transparent;
+  }
+
+  .btn-archive:hover {
+    background-color: var(--bg-dark);
+    color: var(--bg-canvas);
+  }
+
+  @media (max-width: 767px) {
+    .project-card {
+      grid-column: span 12;
+    }
+  }
+</style>

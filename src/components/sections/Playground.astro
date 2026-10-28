@@ -1,0 +1,147 @@
+---
+interface LabItem {
+  image: string;
+  imageAlt: string;
+  caption: string;
+  wide: boolean;
+}
+
+interface Props {
+  sectionId: string;
+  heading: string;
+  indexLabel: string;
+  cardHeading: string;
+  cardSubheading: string;
+  items: LabItem[];
+}
+
+const { sectionId, heading, indexLabel, cardHeading, cardSubheading, items } =
+  Astro.props;
+---
+
+<div class="section-header" id={sectionId}>
+  <h2 class="section-title">{heading}</h2>
+  <span class="section-index">{indexLabel}</span>
+</div>
+
+<section class="bento-grid">
+  <div class="bento-card playground-card">
+    <div class="playground-header">
+      <div>
+        <h3 class="playground-heading">{cardHeading}</h3>
+      </div>
+      <p class="playground-sub">{cardSubheading}</p>
+    </div>
+
+    <div class="marquee-wrapper">
+      <div class="marquee-track">
+        {
+          items.map((item) => (
+            <div class={`lab-item${item.wide ? " wide" : ""}`}>
+              <img src={item.image} alt={item.imageAlt} loading="lazy" />
+              <span class="lab-caption">{item.caption}</span>
+            </div>
+          ))
+        }
+      </div>
+      <div class="marquee-track" aria-hidden="true">
+        {
+          items.map((item) => (
+            <div class={`lab-item${item.wide ? " wide" : ""}`}>
+              <img src={item.image} alt={item.imageAlt} loading="lazy" />
+              <span class="lab-caption">{item.caption}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .playground-card {
+    grid-column: span 12;
+    padding: 40px 0;
+  }
+
+  .playground-header {
+    padding: 0 40px;
+    margin-bottom: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .playground-heading {
+    font-size: var(--text-xl);
+    font-weight: 500;
+  }
+
+  .playground-sub {
+    color: var(--text-muted);
+    max-width: 520px;
+    font-size: 0.95rem;
+  }
+
+  .marquee-wrapper {
+    overflow: hidden;
+    user-select: none;
+    display: flex;
+    gap: var(--grid-gap);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: var(--grid-gap);
+    min-width: 100%;
+    flex-shrink: 0;
+    animation: scrollMarquee 28s linear infinite;
+  }
+
+  .marquee-wrapper:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes scrollMarquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--grid-gap)));
+    }
+  }
+
+  .lab-item {
+    height: 300px;
+    width: 300px;
+    flex-shrink: 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    position: relative;
+    background: var(--bg-dark);
+  }
+
+  .lab-item.wide {
+    width: 420px;
+  }
+
+  .lab-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .lab-caption {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: var(--bg-dark-caption);
+    backdrop-filter: blur(6px);
+    color: var(--bg-canvas);
+    font-size: var(--text-xs);
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+  }
+</style>

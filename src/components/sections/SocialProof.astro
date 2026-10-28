@@ -1,0 +1,174 @@
+---
+interface Testimonial {
+  quote: string;
+  authorName: string;
+  authorRole: string;
+  avatar: string;
+  avatarAlt: string;
+}
+
+interface CvRow {
+  role: string;
+  period: string;
+}
+
+interface Props {
+  heading: string;
+  indexLabel: string;
+  quoteSymbol: string;
+  testimonials: Testimonial[];
+  cv: {
+    heading: string;
+    rows: CvRow[];
+    ctaLabel: string;
+    ctaHref: string;
+  };
+}
+
+const { heading, indexLabel, quoteSymbol, testimonials, cv } = Astro.props;
+---
+
+<div class="section-header">
+  <h2 class="section-title">{heading}</h2>
+  <span class="section-index">{indexLabel}</span>
+</div>
+
+<section class="bento-grid">
+  {
+    testimonials.map((item) => (
+      <div class="bento-card testimonial-card">
+        <div>
+          <div class="quote-mark">{quoteSymbol}</div>
+          <p class="quote-text">{item.quote}</p>
+        </div>
+        <div class="quote-author">
+          <img
+            class="author-avatar"
+            src={item.avatar}
+            alt={item.avatarAlt}
+            loading="lazy"
+          />
+          <div>
+            <div class="author-name">{item.authorName}</div>
+            <div class="author-role">{item.authorRole}</div>
+          </div>
+        </div>
+      </div>
+    ))
+  }
+
+  <div class="bento-card cv-card">
+    <div>
+      <h3 class="cv-heading">{cv.heading}</h3>
+      <div class="cv-list">
+        {
+          cv.rows.map((row) => (
+            <div class="cv-row">
+              <span>{row.role}</span>
+              <span>{row.period}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <a href={cv.ctaHref} class="btn btn-outline cv-cta">{cv.ctaLabel}</a>
+  </div>
+</section>
+
+<style>
+  .testimonial-card {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+  }
+
+  .quote-mark {
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    line-height: 0.6;
+    color: var(--accent-terracotta);
+  }
+
+  .quote-text {
+    font-size: 1.02rem;
+    line-height: 1.55;
+  }
+
+  .quote-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .author-name {
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+
+  .author-role {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .cv-card {
+    grid-column: span 4;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .cv-heading {
+    font-size: var(--text-lg);
+    font-weight: 500;
+  }
+
+  .cv-list {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-size: 0.92rem;
+  }
+
+  .cv-row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: 10px;
+  }
+
+  .cv-row span:last-child {
+    color: var(--text-muted);
+  }
+
+  .cv-cta {
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonial-card {
+      grid-column: span 6;
+    }
+    .cv-card {
+      grid-column: span 12;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .testimonial-card,
+    .cv-card {
+      grid-column: span 12;
+    }
+  }
+</style>

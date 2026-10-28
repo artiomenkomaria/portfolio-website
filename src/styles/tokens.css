@@ -1,0 +1,71 @@
+:root {
+  /* Colors */
+  --bg-canvas: #F5F3EE;
+  --bg-canvas-glass: rgba(245, 243, 238, 0.85);
+  --bg-canvas-tag: rgba(245, 243, 238, 0.6);
+  --bg-canvas-subtle: rgba(245, 243, 238, 0.06);
+  --bg-surface: #EAE6DF;
+  --bg-dark: #1C1B19;
+  --bg-dark-glass: rgba(28, 27, 25, 0.65);
+  --bg-dark-badge: rgba(28, 27, 25, 0.75);
+  --bg-dark-caption: rgba(28, 27, 25, 0.8);
+  --bg-dark-overlay: rgba(28, 27, 25, 0.92);
+  --bg-dark-pill: rgba(28, 27, 25, 0.4);
+  --bg-dark-hover: rgba(28, 27, 25, 0.04);
+  --bg-black: #000000;
+
+  --text-primary: #1C1B19;
+  --text-muted: #78736A;
+  --text-muted-on-dark: #A09B90;
+  --text-light-muted: rgba(245, 243, 238, 0.75);
+
+  --accent-terracotta: #D94E34;
+  --accent-terracotta-glow: rgba(217, 78, 52, 0.45);
+  --accent-terracotta-shadow: rgba(217, 78, 52, 0.3);
+  --status-green: #3B7A57;
+  --status-green-glow: rgba(59, 122, 87, 0.35);
+
+  --border-color: #DCD7CE;
+  --border-on-dark: rgba(245, 243, 238, 0.12);
+  --border-on-dark-strong: rgba(245, 243, 238, 0.16);
+  --border-white-subtle: rgba(255, 255, 255, 0.15);
+
+  --shadow-preview: 0 24px 48px rgba(0, 0, 0, 0.18);
+  --shadow-sticker: 0 10px 20px rgba(0, 0, 0, 0.2);
+  --shadow-cursor: 0 12px 24px var(--accent-terracotta-shadow);
+
+  /* Typography */
+  --font-sans: "Inter Tight", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.85rem;
+  --text-base: 1rem;
+  --text-md: 1.05rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.35rem;
+  --text-2xl: 1.5rem;
+  --text-section: 2rem;
+  --text-section-index: 1.75rem;
+  --text-hero: clamp(2.4rem, 3.8vw, 3.85rem);
+  --text-footer-heading: clamp(2rem, 3.5vw, 3.4rem);
+  --text-email-cta: clamp(1.3rem, 3.4vw, 3.2rem);
+
+  /* Layout & Spacing */
+  --container-max-width: 1440px;
+  --container-padding-desktop: 40px;
+  --container-padding-tablet: 24px;
+  --container-padding-mobile: 16px;
+  --grid-gap: 20px;
+  --card-padding: 40px;
+  --card-padding-mobile: 24px;
+  --section-margin-top: 96px;
+  --section-margin-bottom: 32px;
+
+  /* Radii & Transitions */
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+  --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
