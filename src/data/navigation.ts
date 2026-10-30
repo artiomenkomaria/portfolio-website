@@ -52,7 +52,7 @@ export interface SiteMeta {
 export const siteMeta: SiteMeta = {
   lang: "ru",
   person: {
-    name: "Алекс Морозов",
+    name: "Алекс Жарков",
     jobTitle: "Визуальный и бренд-дизайнер",
     url: "https://alexmorozov.design",
     email: "hello@alexmorozov.design",
@@ -62,7 +62,7 @@ export const siteMeta: SiteMeta = {
 
 export const navigationData: NavigationData = {
   logo: {
-    name: "АЛЕКС МОРОЗОВ",
+    name: "АЛЕКС ЖАРКОВ",
     arrow: "↗",
     href: "#top",
   },
@@ -110,5 +110,5 @@ export const footerData: FooterData = {
     { label: "LinkedIn", href: "#top" },
   ],
   copyright:
-    "© Алекс Морозов. Собрано с любовью к сеткам. Шрифты: Inter Tight & Instrument Serif.",
+    "© Алекс Жарков. Собрано с любовью к сеткам. Шрифты: Inter Tight & Instrument Serif.",
 };
